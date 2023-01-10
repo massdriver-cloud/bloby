@@ -20,11 +20,12 @@ async function main() {
   //   AZURE_STORAGE_CONNECTION_STRING
   // );
 
+  const credential = new ManagedIdentityCredential(process.env.USER_ASSIGNED_MANAGED_IDENTITY_CLIENT_ID);
   const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME;
   if (!accountName) throw Error('Azure Storage accountName not found');
   const blobServiceClient = new BlobServiceClient(
     `https://${accountName}.blob.core.windows.net`,
-    new DefaultAzureCredential()
+    credential
   );
 
   // Create a unique name for the container
