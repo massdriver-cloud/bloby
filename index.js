@@ -1,5 +1,5 @@
 const { BlobServiceClient } = require("@azure/storage-blob");
-const { DefaultAzureCredential } = require('@azure/identity');
+const { DefaultAzureCredential, ManagedIdentityCredential } = require('@azure/identity');
 const { v1: uuidv1 } = require("uuid");
 const express = require('express')
 require("dotenv").config();
