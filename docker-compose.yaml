@@ -12,7 +12,7 @@ services:
     ports:
       - 3000:4000
     environment:
-      - AZURE_STORAGE_ACCOUNT_NAME=beebeazdevassetst92p
+      - AZURE_STORAGE_ACCOUNT_NAME={AZURE_STORAGE_ACCOUNT_NAME}
       - AZURE_STORAGE_CONNECTION_STRING={AZURE_STORAGE_CONNECTION_STRING}
     volumes:
       - module_cache:/node_modules
