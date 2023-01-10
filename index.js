@@ -11,21 +11,21 @@ async function main() {
   // https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-nodejs?tabs=managed-identity%2Croles-azure-portal%2Csign-in-azure-cli#download-blobs
   console.log("Azure Blob storage v12 - JavaScript quickstart sample ");
 
-  const AZURE_STORAGE_CONNECTION_STRING =
-    process.env.AZURE_STORAGE_CONNECTION_STRING;
-  if (!AZURE_STORAGE_CONNECTION_STRING) {
-    throw Error('Azure Storage Connection string not found');
-  }
-  const blobServiceClient = BlobServiceClient.fromConnectionString(
-    AZURE_STORAGE_CONNECTION_STRING
-  );
-
-  // const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME;
-  // if (!accountName) throw Error('Azure Storage accountName not found');
-  // const blobServiceClient = new BlobServiceClient(
-  //   `https://${accountName}.blob.core.windows.net`,
-  //   new DefaultAzureCredential()
+  // const AZURE_STORAGE_CONNECTION_STRING =
+  //   process.env.AZURE_STORAGE_CONNECTION_STRING;
+  // if (!AZURE_STORAGE_CONNECTION_STRING) {
+  //   throw Error('Azure Storage Connection string not found');
+  // }
+  // const blobServiceClient = BlobServiceClient.fromConnectionString(
+  //   AZURE_STORAGE_CONNECTION_STRING
   // );
+
+  const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME;
+  if (!accountName) throw Error('Azure Storage accountName not found');
+  const blobServiceClient = new BlobServiceClient(
+    `https://${accountName}.blob.core.windows.net`,
+    new DefaultAzureCredential()
+  );
 
   // Create a unique name for the container
   const containerName = 'quickstart' + uuidv1();
