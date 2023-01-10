@@ -11,18 +11,11 @@ async function main() {
   // https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-nodejs?tabs=managed-identity%2Croles-azure-portal%2Csign-in-azure-cli#download-blobs
   console.log("Azure Blob storage v12 - JavaScript quickstart sample ");
 
-  // const AZURE_STORAGE_CONNECTION_STRING =
-  //   process.env.AZURE_STORAGE_CONNECTION_STRING;
-  // if (!AZURE_STORAGE_CONNECTION_STRING) {
-  //   throw Error('Azure Storage Connection string not found');
-  // }
-  // const blobServiceClient = BlobServiceClient.fromConnectionString(
-  //   AZURE_STORAGE_CONNECTION_STRING
-  // );
-
   const credential = new ManagedIdentityCredential(process.env.USER_ASSIGNED_MANAGED_IDENTITY_CLIENT_ID);
+  if (!credential) throw Error('Azure ManagedIdentityCredential not found');
   const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME;
   if (!accountName) throw Error('Azure Storage accountName not found');
+
   const blobServiceClient = new BlobServiceClient(
     `https://${accountName}.blob.core.windows.net`,
     credential
@@ -60,8 +53,8 @@ async function main() {
 
 app.get('/', (req, res) => {
   main()
-  .then((response) => res.send(response))
-  .catch((ex) => res.send(ex.message));
+    .then((response) => res.send(response))
+    .catch((ex) => res.send(ex.message));
 })
 
 app.listen(port, () => {
@@ -80,7 +73,6 @@ async function streamToText(readable) {
 async function getFriends(containerClient) {
   const friends = [];
 
-  // dope ... a "for await"... A "for await clover \u clover_emoji"?
   for await (const blob of containerClient.listBlobsFlat()) {
     const blobClient = containerClient.getBlobClient(blob.name);
     const downloadBlockBlobResponse = await blobClient.download();
@@ -89,11 +81,13 @@ async function getFriends(containerClient) {
     );
     friends.push(friend);
   }
+
   return friends;
 }
 
 function blobsToBlobysFriends(containerClient) {
-  const friends = getFriends(containerClient)
-  return `I'm Bloby and these are my friends. \n ${friends.join("\uD83D\uDE4F")}\nSimply refresh the page if you need help with anything and it will magically appear!`
+  const friends = getFriends(containerClient);
+  const friendString = friends.join("\uD83D\uDE4F");
+  return `I'm Bloby and these are my friends. \n ${friendString}\nSimply refresh the page if you need help with anything and it will magically appear!`
 }
 
