@@ -47,7 +47,7 @@ async function main() {
   // const downloadBlockBlobResponse = await blockBlobClient.download(0);
   // const response = await streamToText(downloadBlockBlobResponse.readableStreamBody)
   const allMyFriends = await blobsToBlobysFriends(containerClient);
-  return `Hello, World! \n${allMyFriends}`;
+  return allMyFriends;
 }
 
 app.get('/', (req, res) => {
