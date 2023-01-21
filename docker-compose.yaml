@@ -4,15 +4,31 @@ volumes:
   module_cache:
 
 services:
-  app:
-    platform: linux/amd64
+  app_dev:
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - 3000:4000
+      - 4000:4000
     environment:
+      - PORT=4000
       - AZURE_STORAGE_ACCOUNT_NAME={AZURE_STORAGE_ACCOUNT_NAME}
-      - USER_ASSIGNED_MANAGED_IDENTITY_CLIENT_ID={USER_ASSIGNED_MANAGED_IDENTITY_CLIENT_ID}
     volumes:
       - module_cache:/node_modules
+    depends_on:
+      - azurite
+
+  app_release:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: ./Dockerfile.release
+    ports:
+      - 4000:4000
+    environment:
+      - PORT=4000
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    ports:
+      - 10000:10000
