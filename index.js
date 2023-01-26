@@ -57,6 +57,10 @@ app.get('/', (req, res) => {
     .catch((ex) => res.send(ex.message));
 })
 
+app.get('/health', (req, res) => {
+  res.send('200: OK');
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
