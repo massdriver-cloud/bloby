@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { blobsToBlobysFriends, findAFriend } from './friends.js';
 
 const app = express()
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 80
 
 async function main() {
   // https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-nodejs?tabs=managed-identity%2Croles-azure-portal%2Csign-in-azure-cli#download-blobs
