@@ -1,0 +1,20 @@
+name: Docker Build & Push
+on:
+  push:
+    branches: [main,test-mass]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Massdriver CLI
+        uses: massdriver-cloud/actions/setup@v2.1
+      - name: Build and Push
+        run: mass image push storage/bloby -a ${{ secrets.AUTHENTICATION_ARTIFACT_ID }} -r us-west2
+
+
+
+
+
